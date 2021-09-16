@@ -1,0 +1,29 @@
+﻿@page "/thankyou"
+
+@inject NavigationManager _navigationManager
+
+<MudCard Elevation="10">
+    <MudCardContent>
+        <div style="width:100%; text-align:center">
+            <img src="/images/pasighealthlogosmall.jpg" alt="Pasig Health" width="100" height="100">
+        </div>
+    </MudCardContent>
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Align="Align.Center">Health Portal</MudText>
+    </MudCardContent>
+    <MudCardContent>
+        <MudText Style="background-color:gainsboro" Color="Color.Default" Typo="Typo.h3" Align="Align.Center">Thank you for applying online.</MudText>
+    </MudCardContent>
+    <br />
+    <MudCardActions>
+        <MudButton @onclick="IncrementCount" FullWidth="true" Variant="Variant.Filled" Color="Color.Primary">Back</MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+
+    private void IncrementCount()
+    {
+        _navigationManager.NavigateTo("/");
+    }
+}

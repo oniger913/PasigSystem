@@ -1,0 +1,96 @@
+﻿@page "/"
+@page "/dashboard"
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager _navigationManager
+
+@using Microsoft.Extensions.Logging
+@inject ILogger<Dashboard> Logger
+
+
+<MudCarousel Style="height:200px;" ShowArrows="@arrows" ShowDelimiters="@delimiters" AutoCycle="@autocycle" TData="object">
+    <MudCarouselItem Transition="transition" Color="@Color.Info">
+        <div class="d-flex" style="height:100%">
+            <img src="/images/drugtest.png" />
+            <MudText Typo="Typo.h4" Align="Align.Inherit">Drug Test</MudText>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Error">
+        <div class="d-flex" style="height:100%">
+            <img src="/images/blood.png" class="oi-align-center" />
+            <MudText Typo="Typo.h4" Align="Align.Inherit">Blood Test</MudText>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Dark">
+        <div class="d-flex" style="height:100%">
+            <img src="/images/fecal.png" />
+            <MudText Typo="Typo.h4" Align="Align.Inherit">Fecalysis</MudText>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Warning">
+        <div class="d-flex" style="height:100%">
+            <img src="/images/urine.png" />
+            <MudText Typo="Typo.h4" Align="Align.Inherit">Urinalysis</MudText>
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition" Color="@Color.Primary">
+        <div class="d-flex" style="height:100%">
+            <img src="/images/xray.png" />
+            <MudText Typo="Typo.h4" Align="Align.Inherit">X-Ray</MudText>
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
+<br />
+<MudDivider></MudDivider>
+<br />
+<MudDivider></MudDivider>
+<br />
+<MudCard Elevation="10">
+    <MudCardContent>
+        <div style="width:100%; text-align:center">
+            <img src="/images/pasighealthlogosmall.jpg" alt="Pasig Health" width="100" height="100">
+        </div>
+        <MudText Typo="Typo.h5" Align="Align.Center">Health Certificate Application Form</MudText>
+    </MudCardContent>
+    <MudCardContent>
+        <MudText Style="background-color:gainsboro" Color="Color.Default" Typo="Typo.body1" Align="Align.Center">Enter your email address to start ON-LINE application.</MudText>
+        <br />
+        <MudText Color="Color.Warning" Typo="Typo.body2" Align="Align.Center">Note: Please ensure that the email address is valid. You will receive your Health Certificate thru your email. Thank you.</MudText>
+    </MudCardContent>
+    <MudCardContent>
+        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+            <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!" @ref="emailField"
+                          Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+        </MudForm>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton FullWidth="true" OnClick="HandleValidSubmit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Submit</MudButton>
+    </MudCardActions>
+</MudCard>
+
+
+@code{
+
+    bool success;
+    string[] errors = { };
+    MudTextField<string> emailField;
+    MudForm form;
+
+
+    private bool arrows = true;
+    private bool delimiters = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Slide;
+
+    private void HandleValidSubmit()
+    {
+        try
+        {
+            _navigationManager.NavigateTo($"applicationform/{emailField.Text}");
+        }
+        finally
+        {
+        }
+
+    }
+
+}

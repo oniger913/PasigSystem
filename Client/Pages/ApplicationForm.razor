@@ -1,0 +1,242 @@
+﻿@page "/applicationform/{email}"
+@using Microsoft.Extensions.Logging
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager _navigationManager
+@inject ILogger<ApplicationForm> Logger
+@inject ISnackbar Snackbar
+
+<MudCard Elevation="10">
+    <MudCardContent>
+        <div style="width:100%; text-align:center">
+            <img src="/images/pasighealthlogosmall.jpg" alt="Pasig Health" width="100" height="100">
+        </div>
+        <MudText Typo="Typo.h5" Align="Align.Center">Health Certificate Application Form</MudText>
+    </MudCardContent>
+    <MudCardContent>
+        <MudForm @ref="form" @bind-IsValid="@success">
+            <MudCard Elevation="5">
+                <MudCardContent>
+                    <img src="data:image/png;base64,@Convert.ToBase64String(image)" alt="@myid" width="75" height="75">
+                    <MudText Typo="Typo.body2" Align="Align.Left">QR Code</MudText>
+                </MudCardContent>
+            </MudCard>
+            <br />
+            <MudTextField Value="@email" T="string" Label="Email" Required="true" RequiredError="Email is required!" @ref="emailField" Placeholder="@email"
+                          Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+            <MudTextField T="string" Label="LastName" Required="true" RequiredError="LastName is required!" @ref="lastNameField" />
+            <MudTextField T="string" Label="FirstName" Required="true" RequiredError="FirstName is required!" @ref="firstNameField" />
+            <MudTextField T="string" Label="MiddleName" Required="true" RequiredError="MiddleName is required!" @ref="middleNameField" />
+            <br />
+            <MudTextField T="string" Label="Mother's Maiden MiddleName" Required="false" Placeholder="Optional" @ref="maidenMiddleNameField" />
+            <br />
+            <MudGrid>
+                <MudItem xs="12" sm="12" md="12">
+                    <MudDatePicker Required="true" RequiredError="Birthdate is required!" Label="BirthDate" @bind-Date="bdate" HelperText="" DateFormat="MM/dd/yyyy"/>
+                </MudItem>
+            </MudGrid>
+            <br />
+            <MudGrid>
+                <MudItem xs="12" sm="12" md="12">
+                    <MudSelect Label="Civil Status" T="CivilStatus" @bind-Value="@civilStatus" Required="true" RequiredError="Civil Status is required!" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
+                        <MudSelectItem Value="@(new CivilStatus() { Name="SINGLE"})" />
+                        <MudSelectItem Value="@(new CivilStatus() { Name="MARRIED"})" />
+                        <MudSelectItem Value="@(new CivilStatus() { Name="SEPARATED"})" />
+                        <MudSelectItem Value="@(new CivilStatus() { Name="WIDOWED"})" />
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+            <br />
+            <MudText>Gender*</MudText>
+            <MudRadioGroup Required="true" RequiredError="Gender is required!" @bind-SelectedOption="@SelectedGender" title="Gender">
+                <MudRadio Option="@("FEMALE")">FEMALE</MudRadio>
+                <MudRadio Option="@("MALE")">MALE</MudRadio>
+            </MudRadioGroup>
+            <br />
+            <MudText>Photo:</MudText>
+            <InputFile id="fileInput112" OnChange="UploadFilesAsync" hidden multiple accept=".jpg, .jpeg, .png" />
+            <MudButton HtmlTag="label"
+                       Variant="Variant.Filled"
+                       Color="Color.Default"
+                       StartIcon="@Icons.Filled.CloudUpload"
+                       for="fileInput112">
+                Upload your photo
+            </MudButton>
+            @if (files != null)
+            {
+                <MudList>
+                    @foreach (var file in files)
+                    {
+                        <MudListItem Icon="@Icons.Filled.AttachFile">
+                            @file.Name <code>@file.Size bytes</code>
+                        </MudListItem>
+                    }
+                </MudList>
+            }
+            <br />
+            <div class="row">
+                @foreach (var item in filesBase64)
+                {
+                    <img src="data:@item.contentType;base64,@item.base64data" style="height:150px;width:150px"/>
+                }
+            </div>
+            <br />
+            <MudTextField T="string" Label="Home Address" Required="false" @ref="homeAddressField" />
+            <br />
+
+            <MudGrid>
+                <MudItem xs="12" sm="12" md="12">
+                    <MudSelect T="BarangayX" @bind-Value="@barangay" Label="Barangay" Required="true" RequiredError="Civil Status is required!" Variant="Variant.Text" ToStringFunc="@converter1" OffsetY="true">
+                        <MudSelectItem Value="@(new BarangayX() { Name="_Other Barangay"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Bagong Ilog"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Bagong Katipunan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Bambang"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Buting"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Caniogan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Dela Paz"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Kalawaan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Kapasigan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Kapitolyo"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Malinao"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Manggahan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Maybunga"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Oranbo"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Palatiw"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Pinagbuhatan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Pineda"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Rosario"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Sagad"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="San Antonio"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="San Joaquin"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="San Jose"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="San Miguel"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="San Nicolas"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Santolan"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Sta. Cruz"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Sta. Lucia"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Sta. Rosa"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Sto. Tomas"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Sumilang"})" />
+                        <MudSelectItem Value="@(new BarangayX() { Name="Ugong"})" />
+                    
+                </MudSelect>
+                </MudItem>
+            </MudGrid>
+            <br />
+    <br />
+            <MudTextField T="string" Label="Company" Required="false" @ref="companyField" />
+            <MudTextField T="string" Label="CompanyAddress" Required="false" @ref="companyAddressField" />
+            <br />
+            <MudText>Category:</MudText>
+            <MudRadioGroup @bind-SelectedOption="@SelectedCategory">
+                <MudRadio Option="@("FOOD")">FOOD</MudRadio>
+                <MudRadio Option="@("NON-FOOD")">NON-FOOD</MudRadio>
+            </MudRadioGroup>
+            <br />
+            <MudText Style="background-color:gainsboro" Color="Color.Default" Typo="Typo.body1" Align="Align.Center">SERVICES OFFERED and PRICES</MudText>
+            <MudPaper Width="100%" Elevation="3">
+                <MudList Clickable="true" @bind-SelectedItem="selectedItem">
+                    <MudListSubheader>
+                        Item selected:
+                        <MudChip Color="Color.Default">
+                            @(selectedItem?.Text ?? "None.")
+                        </MudChip>
+                    </MudListSubheader>
+                    <MudListItem Text="Walk-In">
+                        <NestedList>
+                            <MudListItem Text="P370 Package 1 - Drug Test, Chest X-ray, Urinalysis, Fecalysis, Health ID" />
+                            <MudListItem Text="P340 Package 2 - Drug Test, Chest X-ray, Health ID" />
+                        </NestedList>
+                    </MudListItem>
+                    <MudListItem Text="With Business Permit">
+                        <NestedList>
+                            <MudListItem Text="P300 Package 3 - Drug Test, Chest X-ray, Urinalysis, Fecalysis" />
+                            <MudListItem Text="P270 Package 4 - Drug Test, Chest X-ray" />
+                        </NestedList>
+                    </MudListItem>
+                    <MudListItem Text="Social Hygiene">
+                        <NestedList>
+                            <MudListItem Text="P530 Package 5 - Drug Test, Chest X-ray, HBsAg, Syphilis, Seminar, Health ID" />
+                            <MudListItem Text="P580 Package 6 - Drug Test, Chest X-ray, HBsAg, Syphilis, Seminar, Health ID" />
+                        </NestedList>
+                    </MudListItem>
+                    <MudListItem Text="With Complete Health Requirements">
+                        <NestedList>
+                            <MudListItem Text="P120 Validation fee, Health ID" />
+                        </NestedList>
+                    </MudListItem>
+                    <MudListItem Text="Personalized assistance needed on-site" />
+                </MudList>
+            </MudPaper>
+            <br />
+            <MudText Style="background-color:gainsboro" Color="Color.Default" Typo="Typo.body1" Align="Align.Center">PAYMENT METHOD</MudText>
+            <MudRadioGroup @bind-SelectedOption="@SelectedPayment">
+                <MudRadio Option="@("CASH")">CASH</MudRadio>
+                <br />
+                @if (SelectedPayment == "CASH")
+                {
+                <MudText>Appointment Date:</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudDatePicker @ref="_picker" @bind-Date="appDate" AutoClose="true" DateFormat="MM/dd/yyyy">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+                                <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => _picker.Close())">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+                </MudGrid>
+                <br />
+                <MudText>Appointment Time:</MudText>
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudSelect T="AppointmentTime" @bind-Value="@appTime" Variant="Variant.Outlined" ToStringFunc="@converter2" OffsetY="true">
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="9:00AM"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="10:00AM"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="11:00AM"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="12:00NN"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="1:00PM"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="2:00PM"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="3:00PM"})" />
+                            <MudSelectItem Value="@(new AppointmentTime() { Name="4:00PM"})" />
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
+                }
+                <br />
+                <MudRadio Option="@("PAYPAL")">
+                    PAYPAL
+                </MudRadio>
+            </MudRadioGroup>
+            <MudCard Elevation="3">
+                <div id="smart-button-container">
+                    <div class="form-group col-md-5" style="text-align: center;">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+            </MudCard>
+
+            <br />
+            <MudCheckBox Disabled="false" T="bool" Required="true" RequiredError="You must agree" Class="ml-n2"
+                         Label="I agree to give issuer permission to obtain personal information from me in exchange for the issuance of Health Permit." />
+        </MudForm>
+    </MudCardContent>
+            @*@success*@
+    <MudCardActions>
+        <MudButton OnClick="GoBack" Variant="Variant.Filled" Color="Color.Default">Back</MudButton>
+        <MudButton OnClick="HandleValidSubmitAsync" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Apply</MudButton>
+    </MudCardActions>
+</MudCard>
+<br />
+<MudCard>
+    <MudCardContent>
+        <MudText Typo="Typo.body2">Data Privacy Notice</MudText>
+    </MudCardContent>
+</MudCard>
+
+
+@code {
+    [Parameter]
+    public string email { get; set; }
+
+}
