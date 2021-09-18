@@ -31,7 +31,7 @@
             <br />
             <MudGrid>
                 <MudItem xs="12" sm="12" md="12">
-                    <MudDatePicker Required="true" RequiredError="Birthdate is required!" Label="BirthDate" @bind-Date="bdate" HelperText="" DateFormat="MM/dd/yyyy"/>
+                    <MudDatePicker Required="true" RequiredError="Birthdate is required!" Label="BirthDate" @bind-Date="bdate" HelperText="" DateFormat="MM/dd/yyyy" />
                 </MudItem>
             </MudGrid>
             <br />
@@ -76,7 +76,7 @@
             <div class="row">
                 @foreach (var item in filesBase64)
                 {
-                    <img src="data:@item.contentType;base64,@item.base64data" style="height:150px;width:150px"/>
+                    <img src="data:@item.contentType;base64,@item.base64data" style="height:150px;width:150px" />
                 }
             </div>
             <br />
@@ -117,12 +117,12 @@
                         <MudSelectItem Value="@(new BarangayX() { Name="Sto. Tomas"})" />
                         <MudSelectItem Value="@(new BarangayX() { Name="Sumilang"})" />
                         <MudSelectItem Value="@(new BarangayX() { Name="Ugong"})" />
-                    
-                </MudSelect>
+
+                    </MudSelect>
                 </MudItem>
             </MudGrid>
             <br />
-    <br />
+            <br />
             <MudTextField T="string" Label="Company" Required="false" @ref="companyField" />
             <MudTextField T="string" Label="CompanyAddress" Required="false" @ref="companyAddressField" />
             <br />
@@ -174,34 +174,34 @@
                 <br />
                 @if (SelectedPayment == "CASH")
                 {
-                <MudText>Appointment Date:</MudText>
-                <MudGrid>
-                    <MudItem xs="12" sm="12" md="12">
-                        <MudDatePicker @ref="_picker" @bind-Date="appDate" AutoClose="true" DateFormat="MM/dd/yyyy">
-                            <PickerActions>
-                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
-                                <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => _picker.Close())">Ok</MudButton>
-                            </PickerActions>
-                        </MudDatePicker>
-                    </MudItem>
-                </MudGrid>
-                <br />
-                <MudText>Appointment Time:</MudText>
-                <MudGrid>
-                    <MudItem xs="12" sm="12" md="12">
-                        <MudSelect T="AppointmentTime" @bind-Value="@appTime" Variant="Variant.Outlined" ToStringFunc="@converter2" OffsetY="true">
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="9:00AM"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="10:00AM"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="11:00AM"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="12:00NN"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="1:00PM"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="2:00PM"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="3:00PM"})" />
-                            <MudSelectItem Value="@(new AppointmentTime() { Name="4:00PM"})" />
-                        </MudSelect>
-                    </MudItem>
-                </MudGrid>
+                    <MudText>Appointment Date:</MudText>
+                    <MudGrid>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudDatePicker @ref="_picker" @bind-Date="appDate" AutoClose="true" DateFormat="MM/dd/yyyy">
+                                <PickerActions>
+                                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+                                    <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+                                    <MudButton Color="Color.Primary" OnClick="@(() => _picker.Close())">Ok</MudButton>
+                                </PickerActions>
+                            </MudDatePicker>
+                        </MudItem>
+                    </MudGrid>
+                    <br />
+                    <MudText>Appointment Time:</MudText>
+                    <MudGrid>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudSelect T="AppointmentTime" @bind-Value="@appTime" Variant="Variant.Outlined" ToStringFunc="@converter2" OffsetY="true">
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="9:00AM"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="10:00AM"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="11:00AM"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="12:00NN"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="1:00PM"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="2:00PM"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="3:00PM"})" />
+                                <MudSelectItem Value="@(new AppointmentTime() { Name="4:00PM"})" />
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
                 }
                 <br />
                 <MudRadio Option="@("PAYPAL")">
@@ -209,11 +209,10 @@
                 </MudRadio>
             </MudRadioGroup>
             <MudCard Elevation="3">
-                <div id="smart-button-container">
-                    <div class="form-group col-md-5" style="text-align: center;">
-                        <div id="paypal-button-container"></div>
-                    </div>
-                </div>
+                @if (SelectedPayment == "PAYPAL")
+                {
+                    <PaypalCheckout></PaypalCheckout>
+                }
             </MudCard>
 
             <br />
@@ -221,7 +220,7 @@
                          Label="I agree to give issuer permission to obtain personal information from me in exchange for the issuance of Health Permit." />
         </MudForm>
     </MudCardContent>
-            @*@success*@
+    @*@success*@
     <MudCardActions>
         <MudButton OnClick="GoBack" Variant="Variant.Filled" Color="Color.Default">Back</MudButton>
         <MudButton OnClick="HandleValidSubmitAsync" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Apply</MudButton>

@@ -8,7 +8,7 @@
     }
     var orderDescription = '';
     if (orderDescription === '') {
-        orderDescription = 'Package';
+        orderDescription = 'Item';
     }
     paypal.Buttons({
         style: {
@@ -39,11 +39,11 @@
                     description: orderDescription,
                     amount: {
                         currency_code: 'PHP',
-                        value: "270.00",
+                        value: priceTotal,
                         breakdown: {
                             item_total: {
                                 currency_code: 'PHP',
-                                value: "270.00",
+                                value: itemTotalValue,
                             },
                             shipping: {
                                 currency_code: 'PHP',
@@ -51,7 +51,7 @@
                             },
                             tax_total: {
                                 currency_code: 'PHP',
-                                value: "0",
+                                value: tax,
                             }
                         }
                     },
@@ -59,7 +59,7 @@
                         name: selectedItemDescription,
                         unit_amount: {
                             currency_code: 'PHP',
-                            value: "270.00",
+                            value: selectedItemPrice,
                         },
                         quantity: quantity
                     }]
@@ -67,9 +67,19 @@
             });
         },
         onApprove: function (data, actions) {
-            return actions.order.capture().then(function (details) {
-                //alert('Transaction completed by ' + details.payer.name.given_name + '!');
-                dotNetHelper.invokeMethodAsync('OnApprove', data, details);
+            return actions.order.capture().then(function (orderData) {
+                debugger;
+                dotNetHelper.invokeMethodAsync('OnApprove', data, orderData);
+                // Full available details
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                // Show a success message within this page, e.g.
+                const element = document.getElementById('paypal-button-container');
+                element.innerHTML = '';
+                element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                // Or go to another URL:  actions.redirect('thank_you.html');
+
             });
         },
         onError: function (err) {

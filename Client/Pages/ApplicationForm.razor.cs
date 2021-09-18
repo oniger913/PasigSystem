@@ -139,15 +139,6 @@ namespace PasigSystem.Client.Pages
         {
             this.objRef = DotNetObjectReference.Create(this);
         }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-
-            if (firstRender)
-            {
-                await JSRuntime.InvokeVoidAsync("initPayPalButton", objRef);
-                StateHasChanged();
-            }
-        }
 
         private void HandleValidSubmitAsync()
         {

@@ -1,0 +1,50 @@
+﻿<div>
+    <div id="smart-button-container">
+        <div style="text-align: center;">
+            <div style="margin-bottom: 1.25rem;">
+                <p></p>
+                <select id="item-options">
+                    <option value="" price=""> -  PHP</option>
+                    <option value="5 Dollars" price="5"> - 5 USD</option>
+                </select>
+                <select style="visibility: hidden" id="quantitySelect"></select>
+            </div>
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
+</div>
+@code{
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private DotNetObjectReference<PaypalCheckout> objRef;
+
+    protected override void OnInitialized()
+    {
+        this.objRef = DotNetObjectReference.Create(this);
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initPayPalButton", objRef);
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable]
+    public async void OnApprove(PaypalCheckoutApprovedDataModel data, PaypalCheckoutApprovedDetailsModel orderData)
+    {
+        try
+        {
+            await Task.Yield();
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+}
