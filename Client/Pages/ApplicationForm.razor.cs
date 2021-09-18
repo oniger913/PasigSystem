@@ -93,6 +93,9 @@ namespace PasigSystem.Client.Pages
         public string SelectedCategory { get; set; }
 
         MudListItem selectedItem;
+        private string selectedPrice => (selectedItem.Text.IndexOf(" ") > -1
+                  ? selectedItem.Text.Substring(0, selectedItem.Text.IndexOf(" "))
+                  : selectedItem.Text).Substring(1);
 
         public string SelectedPayment { get; set; }
 

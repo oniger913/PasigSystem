@@ -68,7 +68,6 @@
         },
         onApprove: function (data, actions) {
             return actions.order.capture().then(function (orderData) {
-                debugger;
                 dotNetHelper.invokeMethodAsync('OnApprove', data, orderData);
                 // Full available details
                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
