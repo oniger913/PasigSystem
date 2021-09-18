@@ -93,6 +93,8 @@ namespace PasigSystem.Client.Pages
         public string SelectedCategory { get; set; }
 
         MudListItem selectedItem;
+        private string selectedPrice { get; set; }
+        private string SelectedPackage { get; set; }
 
         public string SelectedPayment { get; set; }
 
@@ -138,15 +140,6 @@ namespace PasigSystem.Client.Pages
         protected override void OnInitialized()
         {
             this.objRef = DotNetObjectReference.Create(this);
-        }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-
-            if (firstRender)
-            {
-                await JSRuntime.InvokeVoidAsync("initPayPalButton", objRef);
-                StateHasChanged();
-            }
         }
 
         private void HandleValidSubmitAsync()
