@@ -93,9 +93,11 @@ namespace PasigSystem.Client.Pages
         public string SelectedCategory { get; set; }
 
         MudListItem selectedItem;
-        private string selectedPrice => (selectedItem.Text.IndexOf(" ") > -1
-                  ? selectedItem.Text.Substring(0, selectedItem.Text.IndexOf(" "))
-                  : selectedItem.Text).Substring(1);
+        private string selectedPrice { get; set; }
+        //private string selectedPrice => (selectedItem.Text.IndexOf(" ") > -1
+        //          ? selectedItem.Text.Substring(0, selectedItem.Text.IndexOf(" "))
+        //          : selectedItem.Text).Substring(1);
+        private string SelectedPackage { get; set; }
 
         public string SelectedPayment { get; set; }
 

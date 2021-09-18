@@ -143,25 +143,25 @@
                     </MudListSubheader>
                     <MudListItem Text="Walk-In">
                         <NestedList>
-                            <MudListItem Text="P370 Package 1 - Drug Test, Chest X-ray, Urinalysis, Fecalysis, Health ID" />
-                            <MudListItem Text="P340 Package 2 - Drug Test, Chest X-ray, Health ID" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="370")" Text="P370 Package 1 - Drug Test, Chest X-ray, Urinalysis, Fecalysis, Health ID" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="340")" Text="P340 Package 2 - Drug Test, Chest X-ray, Health ID" />
                         </NestedList>
                     </MudListItem>
                     <MudListItem Text="With Business Permit">
                         <NestedList>
-                            <MudListItem Text="P300 Package 3 - Drug Test, Chest X-ray, Urinalysis, Fecalysis" />
-                            <MudListItem Text="P270 Package 4 - Drug Test, Chest X-ray" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="300")" Text="P300 Package 3 - Drug Test, Chest X-ray, Urinalysis, Fecalysis" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="270")" Text="P270 Package 4 - Drug Test, Chest X-ray" />
                         </NestedList>
                     </MudListItem>
                     <MudListItem Text="Social Hygiene">
                         <NestedList>
-                            <MudListItem Text="P530 Package 5 - Drug Test, Chest X-ray, HBsAg, Syphilis, Seminar, Health ID" />
-                            <MudListItem Text="P580 Package 6 - Drug Test, Chest X-ray, HBsAg, Syphilis, Seminar, Health ID" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="530")" Text="P530 Package 5 - Drug Test, Chest X-ray, HBsAg, Syphilis, Seminar, Health ID" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="580")" Text="P580 Package 6 - Drug Test, Chest X-ray, HBsAg, Syphilis, Seminar, Health ID" />
                         </NestedList>
                     </MudListItem>
                     <MudListItem Text="With Complete Health Requirements">
                         <NestedList>
-                            <MudListItem Text="P120 Validation fee, Health ID" />
+                            <MudListItem OnClick="@( ()=> selectedPrice="120")" Text="P120 Validation fee, Health ID" />
                         </NestedList>
                     </MudListItem>
                     <MudListItem Text="Personalized assistance needed on-site" />
