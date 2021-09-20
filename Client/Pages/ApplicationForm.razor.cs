@@ -7,6 +7,8 @@ using PasigSystem.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace PasigSystem.Client.Pages
@@ -137,6 +139,8 @@ namespace PasigSystem.Client.Pages
         private IJSRuntime JSRuntime { get; set; }
         private DotNetObjectReference<ApplicationForm> objRef;
 
+        [Inject]
+        private HttpClient HttpClient { get; set; }
         protected override void OnInitialized()
         {
             this.objRef = DotNetObjectReference.Create(this);
@@ -156,6 +160,18 @@ namespace PasigSystem.Client.Pages
             return myid.ToString();
         }
 
-
+        private async void OnApproveCompleting(object? sender,PaypalTransactionModel paypalTransaction)
+        {
+            try
+            {
+                paypalTransaction.UserEmail = this.email;
+                var response = await HttpClient.PostAsJsonAsync("api/PaypalTransaction", paypalTransaction);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
