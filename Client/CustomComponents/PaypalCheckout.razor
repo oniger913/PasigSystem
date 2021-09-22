@@ -18,6 +18,8 @@
     private IJSRuntime JSRuntime { get; set; }
     [Parameter]
     public string SelectedPrice { get; set; }
+    [Parameter]
+    public EventHandler<PaypalTransactionModel> OnApproveCompleting { get; set; }
 
     private DotNetObjectReference<PaypalCheckout> objRef;
 
@@ -41,7 +43,11 @@
     {
         try
         {
-            await Task.Yield();
+            this.OnApproveCompleting(this, new PaypalTransactionModel() 
+            {
+                Data = data,
+                Details = orderData
+            });
         }
         catch (Exception ex)
         {

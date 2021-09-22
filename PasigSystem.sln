@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasigSystem.Client", "Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasigSystem.Shared", "Shared\PasigSystem.Shared.csproj", "{1BA0262E-8EC9-4DA5-BD21-7C99EA8A5877}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PasigSystem.Database", "PasigSystem.Database\PasigSystem.Database.sqlproj", "{480E72CD-1000-4F12-A88A-9872222A3516}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{1BA0262E-8EC9-4DA5-BD21-7C99EA8A5877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BA0262E-8EC9-4DA5-BD21-7C99EA8A5877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BA0262E-8EC9-4DA5-BD21-7C99EA8A5877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{480E72CD-1000-4F12-A88A-9872222A3516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{480E72CD-1000-4F12-A88A-9872222A3516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{480E72CD-1000-4F12-A88A-9872222A3516}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{480E72CD-1000-4F12-A88A-9872222A3516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{480E72CD-1000-4F12-A88A-9872222A3516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{480E72CD-1000-4F12-A88A-9872222A3516}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
