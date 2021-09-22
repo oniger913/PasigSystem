@@ -167,6 +167,7 @@ namespace PasigSystem.Client.Pages
                 paypalTransaction.UserEmail = this.email;
                 var response = await HttpClient.PostAsJsonAsync("api/PaypalTransaction", paypalTransaction);
                 response.EnsureSuccessStatusCode();
+                _navigationManager.NavigateTo("thankyou");
             }
             catch (Exception)
             {
